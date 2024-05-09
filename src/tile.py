@@ -46,22 +46,38 @@ class Tile:
     def get_number(self):
         return self._number
     
+    def get_honor_type(self):
+        return self._honor_type
+    
     def is_honor(self):
-        pass
+        return self._suit == Suit.HONOR
 
     def is_terminal(self):
-        pass
+        if self._suit == Suit.HONOR:
+            return False
+        return self._number == 1 or self._number == 9
 
     def is_simple(self):
-        pass
+        if self._suit == Suit.HONOR:
+            return False
+        return self._number > 1 and self._number < 9
 
     def is_wind(self):
-        pass
+        return self._honor_type in (HonorType.EAST, HonorType.SOUTH, HonorType.WEST, HonorType.NORTH)
 
     def is_dragon(self):
-        pass
+        return self._honor_type in (HonorType.HAKU, HonorType.HATSU, HonorType.CHUN)
 
     def is_red_dora(self):
-        pass
+        return self._red_dora
+
+    def is_green(self):
+        if self._suit == Suit.SOUZU:
+            if self._number in (2, 3, 4, 6, 8):
+                return True
+        elif self._honor_type == HonorType.HATSU:
+            return True
+        
+        return False
 
     
