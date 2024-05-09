@@ -15,13 +15,29 @@ class Tile:
     @staticmethod
     def _validate(suit: Suit, number: int, honor_type: HonorType, red_dora: bool):
         if type(suit) is not Suit:
-            raise TypeError("suit type incorrect (should be type enum Suit)")
+            raise TypeError(f"suit type {type(suit)} incorrect (should be type enum Suit).")
         if type(number) is not int:
-            raise TypeError("number type incorrect (should be type int)")
+            raise TypeError(f"number type {type(number)}  incorrect (should be type int).")
         if type(honor_type) is not HonorType:
-            raise TypeError("honor_type type incorrect (should be type HonorType)")
+            raise TypeError(f"honor_type {type(honor_type)}  type incorrect (should be type HonorType).")
         if type(red_dora) is not bool:
-            raise TypeError("red_dora type incorrect (should be type bool)")    
+            raise TypeError(f"red_dora {type(red_dora)}  type incorrect (should be type bool).")    
+        
+        if suit != Suit.HONOR:
+            if number < 1 or number > 9:
+                raise ValueError(f"number {number} out of range. Must be between 1 and 9.")
+            if red_dora and number != 5:
+                raise ValueError(f"number {number} cannot be red dora. Must be number 5.")
+            if honor_type != HonorType.NULL:
+                raise ValueError(f"honor_type {honor_type} invalid. Must be HonorType.NULL for non-honor suits.")
+        else:
+            if number != 0:
+                raise ValueError(f"number {number} invalid. Must be 0 for honor suit.")
+            if honor_type == HonorType.NULL:
+                raise ValueError(f"honor_type {honor_type} invalid. Cannot be HonorType.NULL for honor suit.")
+            if red_dora:
+                raise ValueError(f"Honor suit cannot be red dora.")
+
 
 
     def get_suit(self):

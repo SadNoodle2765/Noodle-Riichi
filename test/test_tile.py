@@ -19,18 +19,18 @@ class TestTile(unittest.TestCase):
         self.assertEqual(temp._red_dora, False)
 
     def test_validate_suit_type_correct(self):
-        Tile._validate(Suit.MANZU, 3, HonorType.HAKU, False)
+        Tile._validate(Suit.MANZU, 3, HonorType.NULL, False)
 
     def test_validate_suit_type_incorrect(self):
         with self.assertRaises(TypeError):
-            Tile._validate(5, 3, HonorType.HAKU, False)
+            Tile._validate(5, 3, HonorType.NULL, False)
 
     def test_validate_number_type_correct(self):
-        Tile._validate(Suit.MANZU, 3, HonorType.HAKU, False)
+        Tile._validate(Suit.MANZU, 3, HonorType.NULL, False)
 
     def test_validate_number_type_incorrect(self):
         with self.assertRaises(TypeError):
-            Tile._validate(Suit.MANZU, 'A', HonorType.HAKU, False)
+            Tile._validate(Suit.MANZU, 'A', HonorType.NULL, False)
 
     def test_validate_honor_type_type_correct(self):
         Tile._validate(Suit.HONOR, 0, HonorType.HAKU, False)
@@ -60,6 +60,29 @@ class TestTile(unittest.TestCase):
             Tile._validate(Suit.PINZU, -5, HonorType.NULL, False)
         with self.assertRaises(ValueError):
             Tile._validate(Suit.SOUZU, 20, HonorType.NULL, False)
+
+    def test_validate_number_suit_honor_type_must_be_null(self):
+        with self.assertRaises(ValueError):
+            Tile._validate(Suit.MANZU, 1, HonorType.CHUN, False)
+
+    def test_validate_number_suit_five_can_be_red_dora(self):
+        Tile._validate(Suit.MANZU, 5, HonorType.NULL, True)
+
+    def test_validate_number_suit_nonfive_cannot_be_red_dora(self):
+        with self.assertRaises(ValueError):
+            Tile._validate(Suit.MANZU, 3, HonorType.NULL, True)
+
+    def test_validate_honor_suit_number_must_be_zero(self):
+        with self.assertRaises(ValueError):
+            Tile._validate(Suit.HONOR, 3, HonorType.NULL, False)
+
+    def test_validate_honor_suit_honor_type_cannot_be_null(self):
+        with self.assertRaises(ValueError):
+            Tile._validate(Suit.HONOR, 0, HonorType.NULL, False)
+
+    def test_validate_honor_suit_cannot_be_red_dora(self):
+        with self.assertRaises(ValueError):
+            Tile._validate(Suit.HONOR, 0, HonorType.HAKU, True)
     
 
 if __name__ == '__main__':
